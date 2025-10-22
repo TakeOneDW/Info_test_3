@@ -32,7 +32,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const SUPABASE_URL = 'https://iasgpuuzphsissbwavlc.supabase.co';
-    const SUPABASE_ANON_KEY = 'DEIN_ANON_KEY_HIER';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlhc2dwdXV6cGhzaXNzYndhdmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5ODM1MzUsImV4cCI6MjA3NjU1OTUzNX0.xW6tkp7n029UUxirhCzCB-sl1ErLmRM4K6KgiyNxzQk';
     window.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     console.log("🔑 Supabase Client initialisiert");
   </script>
