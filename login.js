@@ -1,69 +1,43 @@
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("📄 login.js wurde geladen");
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmarterStorage - Startseite</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="header-container">
+    <div class="logo-container">
+      <h2>SmarterStorage</h2>
+      <img src="icon2.png" alt="Logo" class="icon" onerror="this.src='placeholder.png'">
+    </div>
+    <div class="my-chests-container">
+      <h2>Meine Projekte</h2>
+    </div>
+  </div>
 
-  const loginForm = document.querySelector('.login-container form');
-  const messageContainer = document.getElementById('message-container');
+  <div class="box-container">
+    <p>Projekte werden geladen...</p>
+  </div>
 
-  console.log("🔎 Formular gefunden:", loginForm);
+  <button id="logoutBtn" class="submit-button">Abmelden</button>
 
-  if (!window.supabase) {
-    console.error('❌ Supabase Client nicht gefunden.');
-    return;
-  }
+  <!-- Test-Log -->
+  <script>
+    console.log("🚀 startpage.html geladen");
+  </script>
 
-  if (loginForm) {
-    loginForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
+  <!-- Supabase JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = 'https://iasgpuuzphsissbwavlc.supabase.co';
+    const SUPABASE_ANON_KEY = 'DEIN_ANON_KEY_HIER';
+    window.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log("🔑 Supabase Client initialisiert");
+  </script>
 
-      const email = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      console.log("📤 Versuche Login mit:", email);
-
-      const { data, error } = await window.supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      console.log("🔍 Supabase Antwort:", { data, error });
-
-      if (error) {
-        console.error('❌ Login fehlgeschlagen:', error.message);
-        messageContainer.textContent = "❌ " + error.message;
-        messageContainer.style.display = 'block';
-        setTimeout(() => {
-          messageContainer.textContent = '';
-          messageContainer.style.display = 'none';
-        }, 4000);
-        return;
-      }
-
-      if (data && data.user) {
-        console.log('✅ Login erfolgreich! Warte kurz, bis Session gespeichert ist...');
-
-        // Warte kurz, damit Supabase die Session speichern kann
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
-        const { data: { session } } = await window.supabase.auth.getSession();
-        console.log("🧩 Session nach Login:", session);
-
-        // Auth-State-Change Listener
-        window.supabase.auth.onAuthStateChange((event, session) => {
-          if (event === 'SIGNED_IN' && session) {
-            console.log("🔑 Auth-State-Change: SIGNED_IN erkannt", session.user.email);
-            window.location.href = 'startpage.html';
-          }
-        });
-
-        if (session) {
-          window.location.href = 'startpage.html';
-        } else {
-          console.warn("⚠️ Session nicht gefunden, versuche erneut in 1 Sekunde...");
-          setTimeout(() => window.location.href = 'startpage.html', 1000);
-        }
-      } else {
-        console.warn('⚠️ Keine Benutzerinformationen erhalten.');
-      }
-    });
-  }
-});
+  <!-- startpage.js -->
+  <script src="startpage.js" defer></script>
+</body>
+</html>
