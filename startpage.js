@@ -38,19 +38,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     boxContainer.innerHTML = '';
 
     if (error) {
-      boxContainer.innerHTML = ⁠ <p>❌ Fehler beim Laden: ${error.message}</p> ⁠;
+      boxContainer.innerHTML = `<p>❌ Fehler beim Laden: ${error.message}</p>`;
       return;
     }
 
     if (!projects || projects.length === 0) {
-      boxContainer.innerHTML = ⁠ <p>📦 Noch keine Projekte vorhanden.</p> ⁠;
+      boxContainer.innerHTML = `<p>📦 Noch keine Projekte vorhanden.</p>`;
       return;
     }
 
     projects.forEach((p) => {
       const el = document.createElement('a');
       el.classList.add('card');
-      el.href = ⁠ project.html?name=${encodeURIComponent(p.name)} ⁠;
+      el.href = `project.html?name=${encodeURIComponent(p.name)}`;
       el.textContent = p.name;
       boxContainer.appendChild(el);
     });
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.error("❌ Fehler beim Anlegen:", error.message);
         alert("Fehler beim Anlegen: " + error.message);
       } else {
-        alert(⁠ ✅ Projekt '${name}' angelegt! ⁠);
+        alert(`✅ Projekt '${name}' angelegt!`);
         await loadProjects();
       }
     });
