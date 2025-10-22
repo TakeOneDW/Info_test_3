@@ -39,9 +39,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (data && data.user) {
-        console.log('✅ Login erfolgreich! Weiterleitung ...');
-        sessionStorage.setItem('isLoggedIn', 'true');
-        window.location.href = 'startpage.html';
+        console.log('✅ Login erfolgreich! Warte kurz, bis Session gespeichert ist...');
+
+        // Warte kurz, damit Supabase die Session speichern kann
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        const { data: { session } } = await window.supabase.auth.getSession();
+        console.log("🧩 Session nach Login:", session);
+
+        if (session) {
+          window.location.href = 'startpage.html';
+        } else {
+          console.warn("⚠️ Session nicht gefunden, versuche erneut in 1 Sekunde...");
+          setTimeout(() => window.location.href = 'startpage.html', 1000);
+        }
       } else {
         console.warn('⚠️ Keine Benutzerinformationen erhalten.');
       }
