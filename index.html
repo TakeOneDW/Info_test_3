@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmarterStorage</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+  <div class="header-container">
+    <div class="logo-container">
+      <h2>SmarterStorage</h2>
+      <img src="icon2.png" alt="Logo" class="icon">
+    </div>
+  </div>
+
+  <img src="background.png" alt="Background" class="imgage">
+
+  <h1>Die bessere Art zu Lagern und zu Verwalten.</h1>
+  <p>Automatisierte, präzise und effiziente KI-gestützte Bestandsanalyse.<br>
+  Smarte Erkennung und vorausschauende Logistik für Ihr Lager.</p>
+
+  <div id="message-container"></div>
+
+  <div class="login-container">
+    <h3>Anmelden</h3>
+    <form>
+      <div class="form-group">
+        <label for="username">E-Mail</label>
+        <input type="text" id="username" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Passwort</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <button type="submit" class="submit-button">Anmelden</button>
+    </form>
+  </div>
+
+  <!-- Supabase + Login -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = 'https://iasgpuuzphsissbwavlc.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlhc2dwdXV6cGhzaXNzYndhdmxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5ODM1MzUsImV4cCI6MjA3NjU1OTUzNX0.xW6tkp7n029UUxirhCzCB-sl1ErLmRM4K6KgiyNxzQk';
+    window.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log("✅ Supabase initialisiert:", window.supabase);
+  </script>
+  <script src="login.js"></script>
+</body>
+</html>

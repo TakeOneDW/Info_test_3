@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmarterStorage - Startseite</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="header-container">
+    <div class="logo-container">
+      <h2>SmarterStorage</h2>
+      <img src="icon2.png" alt="Logo" class="icon">
+    </div>
+    <div class="my-chests-container">
+      <h2>Meine Projekte</h2>
+    </div>
+  </div>
+
+  <div class="box-container">
+    <p>Projekte werden geladen...</p>
+  </div>
+
+  <button id="logoutBtn" class="submit-button">Abmelden</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = 'https://nbhuincavqwbsugqrqiy.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5iaHVpbmNhdnF3YnN1Z3FycWl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5NTUwOTksImV4cCI6MjA3NjUzMTA5OX0.OX6gmvLvQLS68L8BzmZaapbhRALYVdFqk7ojRrWixbc';
+    window.supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  </script>
+  <script src="startpage.js"></script>
+</body>
+</html>

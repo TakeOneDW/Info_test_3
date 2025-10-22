@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projekt Details</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="container">
+    <h1 id="projectTitle">Projekt</h1>
+    <button id="backBtn" class="logout">← Zurück</button>
+
+    <h2>Dateien</h2>
+    <div id="fileList" class="grid"></div>
+
+    <button id="uploadBtn" class="highlight">+ Datei hochladen</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_URL = 'https://nbhuincavqwbsugqrqiy.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5iaHVpbmNhdnF3YnN1Z3FycWl5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA5NTUwOTksImV4cCI6MjA3NjUzMTA5OX0.OX6gmvLvQLS68L8BzmZaapbhRALYVdFqk7ojRrWixbc';
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const projectName = new URLSearchParams(window.location.search).get('name');
+    document.getElementById('projectTitle').textContent = ⁠ Projekt: ${projectName} ⁠;
+
+    async function loadFiles() {
+      const { data, error } = await supabaseClient.storage.from(projectName).list('', { limit: 100 });
+      const list = document.getElementById('fileList');
+      list.innerHTML = '';
+
+      if (error) {
+        list.innerHTML = ⁠ <p>❌ Fehler beim Laden: ${error.message}</p> ⁠;
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        list.innerHTML = '<p>Keine Dateien vorhanden.</p>';
+        return;
+      }
+
+      data.forEach(file => {
+        const url = ⁠ ${SUPABASE_URL}/storage/v1/object/public/${projectName}/${file.name} ⁠;
+        const el = document.createElement('div');
+        el.classList.add('card');
+        el.innerHTML = `
+          📄 <a href="${url}" target="_blank">${file.name}</a>
+        `;
+        list.appendChild(el);
+      });
+    }
+
+    async function uploadFile() {
+      const fileInput = document.createElement('input');
+      fileInput.type = 'file';
+      fileInput.onchange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const { error } = await supabaseClient.storage
+          .from(projectName)
+          .upload(⁠ ${Date.now()}_${file.name} ⁠, file);
+        if (error) alert("❌ Upload fehlgeschlagen: " + error.message);
+        else {
+          alert("✅ Datei hochgeladen!");
+          loadFiles();
+        }
+      };
+      fileInput.click();
+    }
+
+    document.getElementById('uploadBtn').addEventListener('click', uploadFile);
+    document.getElementById('backBtn').addEventListener('click', () => window.location.href = 'startpage.html');
+
+    loadFiles();
+  </script>
+</body>
+</html>
