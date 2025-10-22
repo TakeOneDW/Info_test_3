@@ -47,6 +47,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const { data: { session } } = await window.supabase.auth.getSession();
         console.log("🧩 Session nach Login:", session);
 
+        // Auth-State-Change Listener
+        window.supabase.auth.onAuthStateChange((event, session) => {
+          if (event === 'SIGNED_IN' && session) {
+            console.log("🔑 Auth-State-Change: SIGNED_IN erkannt", session.user.email);
+            window.location.href = 'startpage.html';
+          }
+        });
+
         if (session) {
           window.location.href = 'startpage.html';
         } else {
